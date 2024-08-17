@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://2y3ar4s86yra"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dp478jyugrn7o" path="res://Player.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://ha0ar5s2c3m4" path="res://Mob.tscn" id="3"]
+
+[sub_resource type="BoxShape3D" id="1"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="2"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_i5n5q"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m3njk"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_yutuu"]
+sky_material = SubResource("ProceduralSkyMaterial_m3njk")
+
+[sub_resource type="Environment" id="Environment_0tcge"]
+background_mode = 2
+sky = SubResource("Sky_yutuu")
+tonemap_mode = 2
+
+[node name="Main" type="Node"]
+script = ExtResource("1")
+mob_scene = ExtResource("3")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("1")
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("2")
+
+[node name="Walls" type="StaticBody3D" parent="."]
+editor_description = "These invisible walls are used to prevent the player from escaping the playable area.
+
+These walls use WorldBoundaryShape3D collision shapes, which are infinitely large planes
+(even though they look finite in the editor)."
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 10, 11)
+shape = SubResource("WorldBoundaryShape3D_i5n5q")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 1, -1.31134e-07, 0, 1.31134e-07, 1, 1, 4.37114e-08, -5.73206e-15, -13, 10, -4.76837e-07)
+shape = SubResource("WorldBoundaryShape3D_i5n5q")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Walls"]
+transform = Transform3D(4.37114e-08, -1, 2.18557e-07, 3.82137e-15, -2.18557e-07, -1, 1, 4.37114e-08, -5.73206e-15, 14, 10, -4.76837e-07)
+shape = SubResource("WorldBoundaryShape3D_i5n5q")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Walls"]
+transform = Transform3D(1, 5.96046e-08, -1.42109e-14, 3.82137e-15, -2.18557e-07, -1, -5.96046e-08, 1, -2.18557e-07, 9.53674e-07, 10, -20)
+shape = SubResource("WorldBoundaryShape3D_i5n5q")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.5, -0.777049, 0.382355, 0, 0.441506, 0.897258, -0.866025, -0.448629, 0.220753, 0, 12.5592, 14.7757)
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_blur = 1.5
+directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 40.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0tcge")
+
+[node name="Player" parent="." instance=ExtResource("2")]
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0.183514, 0, 0)
+
+[node name="Camera" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.346452, 1.01524, 25.2374)
+projection = 1
+fov = 48.6
+size = 31.5868
+far = 40.0
+
+[node name="Mobs" type="Node" parent="."]
+
+[node name="Mob" parent="Mobs" instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8336, 0, -12.5912)
+time_scale = 2.0
+
+[node name="Mob2" parent="Mobs" instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3145, 0, 13.0698)
+time_scale = 0.5
+
+[node name="Mob3" parent="Mobs" instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2312, 0, 13.0698)
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
