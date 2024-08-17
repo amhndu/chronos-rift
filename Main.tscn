@@ -80,7 +80,7 @@ environment = SubResource("Environment_0tcge")
 [node name="Player" parent="." instance=ExtResource("2")]
 
 [node name="CameraPivot" type="Marker3D" parent="."]
-transform = Transform3D(0.866025, 0.353553, -0.353553, 0, 0.707107, 0.707107, 0.5, -0.612373, 0.612373, 0.183514, 0, 0)
+transform = Transform3D(0.707106, 0.408607, -0.577097, 0, 0.816138, 0.577858, 0.707106, -0.408607, 0.577097, 0.183514, 0, 0)
 
 [node name="Camera" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.346452, 1.01524, 25.2374)
