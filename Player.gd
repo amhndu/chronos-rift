@@ -4,7 +4,7 @@ signal hit
 
 var time_scaling_factor = 1.0
 ## How fast the player moves in meters per second.
-@export var speed = 5
+@export var speed = 10
 ## Vertical impulse applied to the character upon jumping in meters per second.
 @export var jump_impulse = 20
 ## Vertical impulse applied to the character upon bouncing over a mob in meters per second.
@@ -12,8 +12,9 @@ var time_scaling_factor = 1.0
 ## The downward acceleration when in the air, in meters per second.
 @export var fall_acceleration = 75
 
-
-func _physics_process(delta):
+# NOTE: For time scaling to work, all acceleration (or velocity increments) must be defined properties
+# Any new property must be added to `scale_time` method
+func _physics_process(delta):	
 	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
@@ -40,12 +41,13 @@ func _physics_process(delta):
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y += jump_impulse
 
+	# 
 	# We apply gravity every frame so the character always collides with the ground when moving.
 	# This is necessary for the is_on_floor() function to work as a body can always detect
 	# the floor, walls, etc. when a collision happens the same frame.
 	velocity.y -= fall_acceleration * delta
-	# apply time scaling
-	velocity *= time_scaling_factor
+	#if not is_on_floor():
+		#print("move_and_slide: ", velocity)
 	move_and_slide()
 
 	# Here, we check if we landed on top of a mob and if so, we kill it and bounce.
@@ -73,8 +75,13 @@ func die():
 	hit.emit()
 	queue_free()
 
-func scale_time(body):
-	time_scaling_factor = body.time_scale
+func scale_time(scale: float):
+	print("time scaling by: ", scale, " finalScale: ", time_scaling_factor * scale)
+	speed *= scale
+	jump_impulse *= scale
+	bounce_impulse *= scale
+	fall_acceleration *= scale
+	time_scaling_factor *= scale
 
 func _on_MobDetector_body_entered(body):
 	if body.is_in_group("mobs"):
@@ -83,10 +90,8 @@ func _on_MobDetector_body_entered(body):
 
 func _on_MobDetector_area_entered(area):
 	if area.is_in_group("time_domain"):
-		time_scaling_factor *= area.owner.time_scale
-		print("setting time scale to ", time_scaling_factor, " scaled by ", area.owner.time_scale)
+		scale_time(area.owner.time_scale)
 		
 func _on_MobDetector_area_exit(area):
 	if area.is_in_group("time_domain"):
-		time_scaling_factor /= area.owner.time_scale
-		print("re-setting time scale to ", time_scaling_factor, " de-scaled by ", area.owner.time_scale)
+		scale_time(1 / area.owner.time_scale)
