@@ -58,7 +58,7 @@ func _physics_process(delta):
 		if collision.get_collider().is_in_group("mob"):
 			var mob = collision.get_collider()
 			if Vector3.UP.dot(collision.get_normal()) > 0.1:
-				mob.squash()
+ 				#mob.squash()
 				velocity.y = bounce_impulse
 				# Prevent this block from running more than once,
 				# which would award the player more than 1 point for squashing a single mob.
