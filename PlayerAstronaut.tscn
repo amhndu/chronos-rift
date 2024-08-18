@@ -37,6 +37,4 @@ transform = Transform3D(-0.522216, -0.800994, -0.292744, 0.848446, -0.453278, -0
 transform = Transform3D(2.7, 0, 0, 0, 2.7, 0, 0, 0, 2.7, 0, 2.38883, 0)
 shape = SubResource("CapsuleShape3D_7hquv")
 
-[connection signal="body_entered" from="Pivot/player_astronaut_imported/RootNode/CharacterArmature/Skeleton3D/BoneAttachment3D/WeaponPivot/Area3D" to="." method="_on_weapon_body_entered"]
-
 [editable path="Pivot/player_astronaut_imported"]

@@ -19,6 +19,7 @@ var is_attacking = false
 
 func _ready():
 	animation_player = $Pivot/player_astronaut_imported/AnimationPlayer
+	$"Pivot/player_astronaut_imported/RootNode/CharacterArmature/Skeleton3D/BoneAttachment3D/WeaponPivot/Area3D".body_entered.connect(_on_weapon_body_entered)
 
 # NOTE: For time scaling to work, all acceleration (or velocity increments) must be defined properties
 # Any new property must be added to `scale_time` method
