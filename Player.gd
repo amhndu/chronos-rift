@@ -20,7 +20,9 @@ func _ready():
 
 # NOTE: For time scaling to work, all acceleration (or velocity increments) must be defined properties
 # Any new property must be added to `scale_time` method
-func _physics_process(delta):	
+func _physics_process(delta):
+	if !is_alive:
+		return
 	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
@@ -40,7 +42,7 @@ func _physics_process(delta):
 		animation_player.play("CharacterArmature|Walk", 0.2)
 		# TODO Scale animation speed according to scale and time_scale
 		#animation_player.speed_scale = time_scaling_factor
-	elif is_alive:
+	else:
 		animation_player.play("CharacterArmature|Idle_Neutral", 0.2)
 		
 
