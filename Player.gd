@@ -107,3 +107,10 @@ func scale_time(scale: float):
 	bounce_impulse *= scale
 	fall_acceleration *= scale
 	time_scaling_factor *= scale
+
+func _on_weapon_body_entered(body: Node3D) -> void:
+	if not is_attacking:
+		return
+		
+	if body.is_in_group("mob"):
+		body.owner.die()

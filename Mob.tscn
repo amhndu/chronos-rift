@@ -275,18 +275,6 @@ tracks/15/path = NodePath("RootNode/CharacterArmature/Skeleton3D:PT.R")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.00569745, 0.00249279, 0.00541352)
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("../../AttackCollider:disabled")
-tracks/16/interp = 1
-tracks/16/loop_wrap = true
-tracks/16/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
 
 [sub_resource type="Animation" id="Animation_rvonc"]
 resource_name = "CharacterArmature|Death"
@@ -987,18 +975,6 @@ tracks/15/keys = PackedFloat32Array(0, 1, -0.00569745, 0.00249279, 0.00541352)
 
 [sub_resource type="Animation" id="Animation_lej61"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../../AttackCollider:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uim5v"]
 _data = {
@@ -1013,7 +989,7 @@ _data = {
 }
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_kv3cf"]
-radius = 1.18406
+radius = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rx4h4"]
 radius = 6.61837
@@ -1031,13 +1007,15 @@ material = SubResource("StandardMaterial3D_olbpx")
 radius = 10.0
 height = 20.0
 
-[node name="Mob" type="Node3D"]
+[node name="Mob" type="Node3D" node_paths=PackedStringArray("bodyBoneAttachment", "bodyCollider")]
 script = ExtResource("1")
+bodyBoneAttachment = NodePath("Body/Pivot/Character/RootNode/CharacterArmature/Skeleton3D/BoneAttachment3D")
+bodyCollider = NodePath("Body/BodyCollider")
 
 [node name="Body" type="CharacterBody3D" parent="." groups=["mob"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0114588, 0)
 collision_layer = 2
-collision_mask = 2147483648
+collision_mask = 0
 metadata/_edit_group_ = true
 
 [node name="Pivot" type="Node3D" parent="Body"]
@@ -1063,7 +1041,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(0.993889, 0.110386, 4.43931e-07, -0.110386, 0.993889, -7.73742e-08, -4.49759e-07, 2.78977e-08, 1, 4.5321e-06, 0.00375034, -7.34646e-05)
 bones/1/enabled = true
 bones/1/position = Vector3(4.5321e-06, 0.00375034, -7.34646e-05)
-bones/1/rotation = Quaternion(1.27676e-15, 2.38419e-07, -3.72528e-09, 1)
+bones/1/rotation = Quaternion(4.996e-16, 2.38419e-07, 9.22375e-15, 1)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "Head"
 bones/2/parent = 1
@@ -1091,7 +1069,7 @@ bones/5/parent = 4
 bones/5/rest = Transform3D(0.0935428, 0.0725836, 0.992966, -0.953446, 0.293716, 0.0683499, -0.286688, -0.953133, 0.0966795, -3.72529e-11, 0.00134405, 4.47035e-10)
 bones/5/enabled = true
 bones/5/position = Vector3(-3.72529e-11, 0.00134405, 4.47035e-10)
-bones/5/rotation = Quaternion(-0.462385, 0.492092, -0.464188, 0.573215)
+bones/5/rotation = Quaternion(-0.462384, 0.492092, -0.464188, 0.573215)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "Leg3.L"
 bones/6/parent = 5
@@ -1224,6 +1202,11 @@ bones/23/scale = Vector3(1, 1, 1)
 mesh = SubResource("ArrayMesh_vcjsu")
 skin = SubResource("Skin_j6roc")
 
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Body/Pivot/Character/RootNode/CharacterArmature/Skeleton3D"]
+transform = Transform3D(1, -1.6992e-09, 1.79935e-07, 1.79939e-07, 0.0163002, -0.999867, -1.23401e-09, 0.999867, 0.0163002, -3.43775e-06, -5.03864e-05, 0.00378199)
+bone_name = "Head"
+bone_idx = 2
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body/Pivot/Character"]
 libraries = {
 "": SubResource("AnimationLibrary_uim5v")
@@ -1236,11 +1219,6 @@ aabb = AABB(-0.977321, 0.251327, -0.864318, 1.90484, 1.09305, 1.23449)
 [node name="BodyCollider" type="CollisionShape3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0118082, 2.64875, -0.272028)
 shape = SubResource("SphereShape3D_kv3cf")
-
-[node name="AttackCollider" type="CollisionShape3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0118082, 2.9877, 1.45102)
-shape = SubResource("SphereShape3D_kv3cf")
-disabled = true
 
 [node name="ProximityCollider" type="Area3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0114588, 0)

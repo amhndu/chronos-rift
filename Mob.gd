@@ -7,11 +7,17 @@ var moving = false
 
 var max_rotation_speed = PI / 2
 
+@onready var animation_player = $Body/Pivot/Character/AnimationPlayer
+@export var bodyBoneAttachment: BoneAttachment3D
+@export var bodyCollider: CollisionShape3D
+
+var is_alive = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Idle")
-	$Body/Pivot/Character/AnimationPlayer.seek(randf_range(0, 2))
-	$Body/Pivot/Character/AnimationPlayer.speed_scale = time_scale
+	animation_player.play("CharacterArmature|Idle")
+	animation_player.seek(randf_range(0, 2))
+	animation_player.speed_scale = time_scale
 
 	
 	if time_scale == 1:
@@ -30,15 +36,22 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
+	if !is_alive:
+		return
+
+	# make the body collider follow the head from the model
+	if bodyBoneAttachment and bodyCollider:
+		bodyCollider.global_position = bodyBoneAttachment.global_position
+	
 	if attack_mode != null:
 		var target = transform.looking_at(attack_mode.position, Vector3(0, 1, 0), true)
 		if target.basis.z.dot(transform.basis.z) < 0.99:
-			$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Walk")
+			animation_player.play("CharacterArmature|Walk")
 		else:
-			$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Attack")
+			animation_player.play("CharacterArmature|Attack")
 		transform = transform.interpolate_with(target, delta * max_rotation_speed * time_scale)
 	else:
-		$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Idle")
+		animation_player.play("CharacterArmature|Idle")
 		
 
 func _on_proximity_collider_body_entered(body: Node3D) -> void:
@@ -59,3 +72,11 @@ func _on_domain_body_entered(body: Node3D) -> void:
 func _on_domain_body_exited(body: Node3D) -> void:
 	if body.has_method("scale_time"):
 		body.scale_time(1 / time_scale)
+
+func die():
+	if !is_alive:
+		return
+	is_alive = false
+	animation_player.play("CharacterArmature|Death")
+	await get_tree().create_timer(0.7).timeout
+	queue_free()
