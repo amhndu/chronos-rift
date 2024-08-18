@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
-signal hit
+signal player_hit
+signal mob_kill
 
 var time_scaling_factor = 1.0
 ## How fast the player moves in meters per second.
@@ -78,15 +79,26 @@ func _physics_process(delta):
 
 func on_timeout_attack():
 	is_attacking = false
+	# TODO call this only when mob actually killed
+	mob_kill.emit()
 
 func die():
 	if !is_alive:
 		return
 	is_alive = false
-	hit.emit()
 	animation_player.play("CharacterArmature|Death")
 	await get_tree().create_timer(1.5).timeout
-	queue_free()
+	#queue_free()
+	player_hit.emit()
+	self.visible = false
+
+func reset_player():
+	self.global_position = Vector3(0, 0, 0)
+	animation_player.play("CharacterArmature|Idle_Sword")
+	is_attacking = false
+	time_scaling_factor = 1
+	is_alive = true
+	self.visible = true
 
 func scale_time(scale: float):
 	print("time scaling by: ", scale, " finalScale: ", time_scaling_factor * scale)

@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://2y3ar4s86yra"]
+[gd_scene load_steps=13 format=3 uid="uid://2y3ar4s86yra"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ha0ar5s2c3m4" path="res://Mob.tscn" id="3"]
 [ext_resource type="Script" path="res://CameraFollow.gd" id="4_4ilyq"]
+[ext_resource type="Script" path="res://HUDManager.gd" id="5_cvawc"]
 [ext_resource type="PackedScene" uid="uid://dw8gv18obpglk" path="res://PlayerAstronaut.tscn" id="5_ubv7w"]
+[ext_resource type="Script" path="res://GameManager.gd" id="6_lkn2a"]
 
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(60, 2, 60)
@@ -104,3 +106,52 @@ time_scale = 0.5
 
 [node name="Mob3" parent="Mobs" instance=ExtResource("3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2312, 0, 13.0698)
+
+[node name="HUD" type="Control" parent="." node_paths=PackedStringArray("scoreLabel", "restartButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_cvawc")
+scoreLabel = NodePath("ScoreLabel")
+restartButton = NodePath("RestartButton")
+
+[node name="ScoreLabel" type="Label" parent="HUD"]
+layout_mode = 1
+offset_left = 30.0
+offset_top = 25.0
+offset_right = 91.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
+text = "Score: 0"
+
+[node name="RestartButton" type="Button" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -15.5
+offset_right = 57.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Restart Game"
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("6_lkn2a")
+
+[connection signal="mob_kill" from="PlayerAstronaut" to="GameManager" method="on_mob_killed"]
+[connection signal="player_hit" from="PlayerAstronaut" to="GameManager" method="on_player_hit"]
+[connection signal="pressed" from="HUD/RestartButton" to="GameManager" method="on_restart_clicked"]
+[connection signal="game_end" from="GameManager" to="HUD" method="on_game_ended"]
+[connection signal="game_restart" from="GameManager" to="PlayerAstronaut" method="reset_player"]
+[connection signal="game_restart" from="GameManager" to="HUD" method="on_game_restarted"]
+[connection signal="score_update" from="GameManager" to="HUD" method="on_score_updated"]
