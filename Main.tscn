@@ -150,8 +150,10 @@ text = "Restart Game"
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("6_lkn2a")
 
+[connection signal="mob_kill" from="PlayerAstronaut" to="Mobs" method="on_mob_killed"]
 [connection signal="mob_kill" from="PlayerAstronaut" to="GameManager" method="on_mob_killed"]
 [connection signal="player_hit" from="PlayerAstronaut" to="GameManager" method="on_player_hit"]
+[connection signal="mobs_all_clear" from="Mobs" to="GameManager" method="on_mobs_all_cleared"]
 [connection signal="pressed" from="HUD/RestartButton" to="GameManager" method="on_restart_clicked"]
 [connection signal="game_end" from="GameManager" to="HUD" method="on_game_ended"]
 [connection signal="game_restart" from="GameManager" to="PlayerAstronaut" method="reset_player"]

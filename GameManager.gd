@@ -17,3 +17,6 @@ func on_restart_clicked():
 	score = 0
 	score_update.emit(score)
 	game_restart.emit()
+
+func on_mobs_all_cleared():
+	game_end.emit()
