@@ -49,7 +49,7 @@ func _physics_process(delta):
 		# TODO Scale animation speed according to scale and time_scale
 		#animation_player.speed_scale = time_scaling_factor
 	elif !is_attacking:
-		animation_player.play("CharacterArmature|Idle_Neutral", 0.2)
+		animation_player.play("CharacterArmature|Idle_Sword", 0.2)
 		
 
 	velocity.x = direction.x * speed
@@ -58,7 +58,7 @@ func _physics_process(delta):
 	# Jumping.
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y += jump_impulse
-		animation_player.play("CharacterArmature|Idle_Neutral", 0.2)
+		animation_player.play("CharacterArmature|Idle_Sword", 0.2)
 
 	# 
 	# We apply gravity every frame so the character always collides with the ground when moving.
