@@ -36,11 +36,9 @@ func _physics_process(delta: float) -> void:
 		else:
 			$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Attack")
 		transform = transform.interpolate_with(target, delta * max_rotation_speed)
+	else:
+		$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Idle")
 		
-
-func _on_melee_attack_collider_body_entered(body: Node3D) -> void:
-	pass # Replace with function body.
-
 
 func _on_proximity_collider_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
@@ -50,3 +48,13 @@ func _on_proximity_collider_body_entered(body: Node3D) -> void:
 func _on_proximity_collider_body_exited(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		attack_mode = null
+
+
+func _on_domain_body_entered(body: Node3D) -> void:
+	if body.has_method("scale_time"):
+		body.scale_time(time_scale)
+
+
+func _on_domain_body_exited(body: Node3D) -> void:
+	if body.has_method("scale_time"):
+		body.scale_time(1 / time_scale)

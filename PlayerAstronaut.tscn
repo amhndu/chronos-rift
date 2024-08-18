@@ -4,29 +4,18 @@
 [ext_resource type="PackedScene" uid="uid://cs3tnxgu5urmk" path="res://player_astronaut_imported.tscn" id="2_xxbfl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7hquv"]
+radius = 0.300941
+height = 1.97504
 
 [node name="PlayerAstronaut" type="CharacterBody3D" groups=["player"]]
 collision_mask = 6
 script = ExtResource("1_2v5fl")
 
 [node name="Pivot" type="Node3D" parent="."]
-transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 0)
+transform = Transform3D(-3, 0, -4.52987e-07, 0, 3, 0, 4.52987e-07, 0, -3, 0, 0, 0)
 
 [node name="player_astronaut_imported" parent="Pivot" instance=ExtResource("2_xxbfl")]
 
-[node name="MobDetector" type="Area3D" parent="."]
-collision_layer = 0
-collision_mask = 10
-monitorable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector"]
-transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 1.8, 0)
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(2.7, 0, 0, 0, 2.7, 0, 0, 0, 2.7, 0, 2.38883, 0)
 shape = SubResource("CapsuleShape3D_7hquv")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 1.8, 0)
-shape = SubResource("CapsuleShape3D_7hquv")
-
-[connection signal="area_entered" from="MobDetector" to="." method="_on_MobDetector_area_entered"]
-[connection signal="area_exited" from="MobDetector" to="." method="_on_MobDetector_area_exit"]
-[connection signal="body_entered" from="MobDetector" to="." method="_on_MobDetector_body_entered"]
