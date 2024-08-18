@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfc1j3mcij85a"]
+
+[ext_resource type="PackedScene" uid="uid://b2hagqt41a6pq" path="res://art/Robot Enemy.glb" id="1_o4fwf"]
+
+[node name="Root Scene" instance=ExtResource("1_o4fwf")]

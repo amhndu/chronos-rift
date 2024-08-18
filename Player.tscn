@@ -47,7 +47,7 @@ _data = {
 "float": SubResource("3")
 }
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_mask = 2147483654
 script = ExtResource("1")
 
