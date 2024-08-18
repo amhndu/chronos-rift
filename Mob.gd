@@ -11,6 +11,7 @@ var max_rotation_speed = PI / 2
 func _ready():
 	$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Idle")
 	$Body/Pivot/Character/AnimationPlayer.seek(randf_range(0, 2))
+	$Body/Pivot/Character/AnimationPlayer.speed_scale = time_scale
 
 	
 	if time_scale == 1:
@@ -35,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Walk")
 		else:
 			$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Attack")
-		transform = transform.interpolate_with(target, delta * max_rotation_speed)
+		transform = transform.interpolate_with(target, delta * max_rotation_speed * time_scale)
 	else:
 		$Body/Pivot/Character/AnimationPlayer.play("CharacterArmature|Idle")
 		
