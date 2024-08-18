@@ -989,7 +989,7 @@ _data = {
 }
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_kv3cf"]
-radius = 1.0
+radius = 1.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rx4h4"]
 radius = 6.61837

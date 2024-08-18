@@ -79,8 +79,6 @@ func _physics_process(delta):
 
 func on_timeout_attack():
 	is_attacking = false
-	# TODO call this only when mob actually killed
-	mob_kill.emit()
 
 func die():
 	if !is_alive:
@@ -114,3 +112,4 @@ func _on_weapon_body_entered(body: Node3D) -> void:
 		
 	if body.is_in_group("mob"):
 		body.owner.die()
+		mob_kill.emit()
