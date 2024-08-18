@@ -13,6 +13,7 @@ var time_scaling_factor = 1.0
 @export var fall_acceleration = 75
 
 var animation_player: AnimationPlayer
+var is_alive = true
 
 func _ready():
 	animation_player = $Pivot/player_astronaut_imported/AnimationPlayer
@@ -39,7 +40,7 @@ func _physics_process(delta):
 		animation_player.play("CharacterArmature|Walk", 0.2)
 		# TODO Scale animation speed according to scale and time_scale
 		#animation_player.speed_scale = time_scaling_factor
-	else:
+	elif is_alive:
 		animation_player.play("CharacterArmature|Idle_Neutral", 0.2)
 		
 
@@ -65,7 +66,12 @@ func _physics_process(delta):
 			die()
 
 func die():
+	if !is_alive:
+		return
+	is_alive = false
 	hit.emit()
+	animation_player.play("CharacterArmature|Death")
+	await get_tree().create_timer(1.5).timeout
 	queue_free()
 
 func scale_time(scale: float):
