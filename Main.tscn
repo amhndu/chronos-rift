@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://2y3ar4s86yra"]
+[gd_scene load_steps=14 format=3 uid="uid://2y3ar4s86yra"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ha0ar5s2c3m4" path="res://Mob.tscn" id="3"]
 [ext_resource type="Script" path="res://CameraFollow.gd" id="4_4ilyq"]
 [ext_resource type="Script" path="res://HUDManager.gd" id="5_cvawc"]
+[ext_resource type="Script" path="res://MobManager.gd" id="5_m56xj"]
 [ext_resource type="PackedScene" uid="uid://dw8gv18obpglk" path="res://PlayerAstronaut.tscn" id="5_ubv7w"]
 [ext_resource type="Script" path="res://GameManager.gd" id="6_lkn2a"]
 
@@ -95,6 +96,7 @@ cameraPivotPath = NodePath("..")
 objectToFollowPath = NodePath("../../PlayerAstronaut")
 
 [node name="Mobs" type="Node" parent="."]
+script = ExtResource("5_m56xj")
 
 [node name="Mob" parent="Mobs" instance=ExtResource("3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8336, 0, -12.5912)
@@ -153,5 +155,6 @@ script = ExtResource("6_lkn2a")
 [connection signal="pressed" from="HUD/RestartButton" to="GameManager" method="on_restart_clicked"]
 [connection signal="game_end" from="GameManager" to="HUD" method="on_game_ended"]
 [connection signal="game_restart" from="GameManager" to="PlayerAstronaut" method="reset_player"]
+[connection signal="game_restart" from="GameManager" to="Mobs" method="on_game_restarted"]
 [connection signal="game_restart" from="GameManager" to="HUD" method="on_game_restarted"]
 [connection signal="score_update" from="GameManager" to="HUD" method="on_score_updated"]

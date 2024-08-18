@@ -12,28 +12,11 @@ var max_rotation_speed = PI / 2
 @export var bodyCollider: CollisionShape3D
 
 var is_alive = true
+@onready var spawn_position = self.global_position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	animation_player.play("CharacterArmature|Idle")
-	animation_player.seek(randf_range(0, 2))
-	animation_player.speed_scale = time_scale
-
-	
-	if time_scale == 1:
-		# no domain object
-		$Domain.hide()
-		#$Domain.monitorable = false
-	elif time_scale > 1:
-		# TODO: avoid copying mesh per object
-		$Domain/MeshInstance3D.mesh = $Domain/MeshInstance3D.mesh.duplicate()
-		$Domain/MeshInstance3D.mesh.material = $Domain/MeshInstance3D.mesh.material.duplicate()
-		$Domain/MeshInstance3D.mesh.material.albedo_color = Color(Color.RED, 0.3)
-	else:
-		$Domain/MeshInstance3D.mesh = $Domain/MeshInstance3D.mesh.duplicate()
-		$Domain/MeshInstance3D.mesh.material = $Domain/MeshInstance3D.mesh.material.duplicate()
-		$Domain/MeshInstance3D.mesh.material.albedo_color = Color(Color.BLUE, 0.3)
-
+	reset()
 
 func _physics_process(delta: float) -> void:
 	if !is_alive:
@@ -79,4 +62,30 @@ func die():
 	is_alive = false
 	animation_player.play("CharacterArmature|Death")
 	await get_tree().create_timer(0.7).timeout
-	queue_free()
+	#queue_free()
+	self.visible = false
+	#TODO Fix hacky way of disabling mob along with all colliders
+	self.global_position = Vector3(9999, 9999, 9999)
+	animation_player.stop()
+
+func reset():
+	animation_player.play("CharacterArmature|Idle")
+	animation_player.seek(randf_range(0, 2))
+	animation_player.speed_scale = time_scale
+
+	if time_scale == 1:
+		# no domain object
+		$Domain.hide()
+		#$Domain.monitorable = false
+	elif time_scale > 1:
+		# TODO: avoid copying mesh per object
+		$Domain/MeshInstance3D.mesh = $Domain/MeshInstance3D.mesh.duplicate()
+		$Domain/MeshInstance3D.mesh.material = $Domain/MeshInstance3D.mesh.material.duplicate()
+		$Domain/MeshInstance3D.mesh.material.albedo_color = Color(Color.RED, 0.3)
+	else:
+		$Domain/MeshInstance3D.mesh = $Domain/MeshInstance3D.mesh.duplicate()
+		$Domain/MeshInstance3D.mesh.material = $Domain/MeshInstance3D.mesh.material.duplicate()
+		$Domain/MeshInstance3D.mesh.material.albedo_color = Color(Color.BLUE, 0.3)
+	self.global_position = spawn_position
+	is_alive = true
+	self.visible = true
