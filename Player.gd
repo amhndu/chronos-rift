@@ -14,6 +14,7 @@ var time_scaling_factor = 1.0
 
 var animation_player: AnimationPlayer
 var is_alive = true
+var is_attacking = false
 
 func _ready():
 	animation_player = $Pivot/player_astronaut_imported/AnimationPlayer
@@ -32,6 +33,11 @@ func _physics_process(delta):
 		direction.z += 1
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1
+	if Input.is_action_pressed("attack") && !is_attacking:
+		is_attacking = true
+		var timeoutSignal:Signal = get_tree().create_timer(1).timeout
+		timeoutSignal.connect(on_timeout_attack)
+		animation_player.play("CharacterArmature|Sword_Slash", 0.2)
 
 	if direction != Vector3.ZERO:
 		# In the lines below, we turn the character when moving and make the animation play faster.
@@ -42,7 +48,7 @@ func _physics_process(delta):
 		animation_player.play("CharacterArmature|Walk", 0.2)
 		# TODO Scale animation speed according to scale and time_scale
 		#animation_player.speed_scale = time_scaling_factor
-	else:
+	elif !is_attacking:
 		animation_player.play("CharacterArmature|Idle_Neutral", 0.2)
 		
 
@@ -66,6 +72,9 @@ func _physics_process(delta):
 		var collider = collision.get_collider()
 		if collider.is_in_group("mob"):
 			die()
+
+func on_timeout_attack():
+	is_attacking = false
 
 func die():
 	if !is_alive:
