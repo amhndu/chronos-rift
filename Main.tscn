@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://2y3ar4s86yra"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://dp478jyugrn7o" path="res://Player.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://ha0ar5s2c3m4" path="res://Mob.tscn" id="3"]
 [ext_resource type="Script" path="res://CameraFollow.gd" id="4_4ilyq"]
+[ext_resource type="PackedScene" uid="uid://dw8gv18obpglk" path="res://PlayerAstronaut.tscn" id="5_ubv7w"]
 
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(60, 2, 60)
@@ -77,7 +77,7 @@ directional_shadow_max_distance = 40.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0tcge")
 
-[node name="Player" parent="." instance=ExtResource("2")]
+[node name="PlayerAstronaut" parent="." instance=ExtResource("5_ubv7w")]
 
 [node name="CameraPivot" type="Marker3D" parent="."]
 transform = Transform3D(0.707106, 0.408607, -0.577097, 0, 0.816138, 0.577858, 0.707106, -0.408607, 0.577097, 0.183514, 0, 0)
@@ -90,7 +90,7 @@ size = 31.5868
 far = 40.0
 script = ExtResource("4_4ilyq")
 cameraPivotPath = NodePath("..")
-objectToFollowPath = NodePath("../../Player")
+objectToFollowPath = NodePath("../../PlayerAstronaut")
 
 [node name="Mobs" type="Node" parent="."]
 
@@ -104,5 +104,3 @@ time_scale = 0.5
 
 [node name="Mob3" parent="Mobs" instance=ExtResource("3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2312, 0, 13.0698)
-
-[connection signal="hit" from="Player" to="." method="_on_player_hit"]

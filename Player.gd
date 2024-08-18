@@ -30,9 +30,6 @@ func _physics_process(delta):
 		direction = direction.normalized().rotated(Vector3(0, 1, 0), deg_to_rad(-45))
 		# Setting the basis property will affect the rotation of the node.
 		basis = Basis.looking_at(direction)
-		$AnimationPlayer.speed_scale = 4
-	else:
-		$AnimationPlayer.speed_scale = 1
 
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed

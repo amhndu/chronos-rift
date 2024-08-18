@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://dw8gv18obpglk"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_2v5fl"]
+[ext_resource type="PackedScene" uid="uid://blvphr0iwh518" path="res://art/player_astronaut.glb" id="1_sx63q"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7hquv"]
+
+[node name="PlayerAstronaut" type="CharacterBody3D"]
+collision_mask = 6
+script = ExtResource("1_2v5fl")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 0)
+
+[node name="Model" parent="Pivot" instance=ExtResource("1_sx63q")]
+
+[node name="MobDetector" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 10
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector"]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 1.8, 0)
+shape = SubResource("CapsuleShape3D_7hquv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 1.8, 0)
+shape = SubResource("CapsuleShape3D_7hquv")
+
+[connection signal="area_entered" from="MobDetector" to="." method="_on_MobDetector_area_entered"]
+[connection signal="area_exited" from="MobDetector" to="." method="_on_MobDetector_area_exit"]
+[connection signal="body_entered" from="MobDetector" to="." method="_on_MobDetector_body_entered"]
