@@ -16,6 +16,7 @@ var time_scaling_factor = 1.0
 var animation_player: AnimationPlayer
 var is_alive = true
 var is_attacking = false
+var can_attack = true
 
 func _ready():
 	animation_player = $Pivot/player_astronaut_imported/AnimationPlayer
@@ -97,6 +98,7 @@ func reset_player():
 	is_attacking = false
 	time_scaling_factor = 1
 	is_alive = true
+	can_attack = true
 	self.visible = true
 
 func scale_time(scale: float):
@@ -108,9 +110,12 @@ func scale_time(scale: float):
 	time_scaling_factor *= scale
 
 func _on_weapon_body_entered(body: Node3D) -> void:
-	if not is_attacking:
+	if not is_attacking or not can_attack:
 		return
 		
-	if body.is_in_group("mob"):
+	if body.is_in_group("mob") and body.owner.is_alive:
+		can_attack = false
 		body.owner.die()
 		mob_kill.emit()
+		await get_tree().create_timer(1).timeout
+		can_attack = true
