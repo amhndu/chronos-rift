@@ -36,11 +36,11 @@ func _physics_process(delta):
 		# Setting the basis property will affect the rotation of the node.
 		basis = Basis.looking_at(direction)
 		# Switch to correct animation
-		animation_player.play("CharacterArmature|Walk")
+		animation_player.play("CharacterArmature|Walk", 0.2)
 		# TODO Scale animation speed according to scale and time_scale
 		#animation_player.speed_scale = time_scaling_factor
 	else:
-		animation_player.play("CharacterArmature|Idle")
+		animation_player.play("CharacterArmature|Idle_Neutral", 0.2)
 		
 
 	velocity.x = direction.x * speed
@@ -49,6 +49,7 @@ func _physics_process(delta):
 	# Jumping.
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y += jump_impulse
+		animation_player.play("CharacterArmature|Idle_Neutral", 0.2)
 
 	# 
 	# We apply gravity every frame so the character always collides with the ground when moving.
@@ -62,11 +63,6 @@ func _physics_process(delta):
 		var collider = collision.get_collider()
 		if collider.is_in_group("mob"):
 			die()
-			
-	# This makes the character follow a nice arc when jumping
-	rotation.x = PI / 24 * velocity.y / jump_impulse
-	
-
 
 func die():
 	hit.emit()
