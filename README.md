@@ -9,3 +9,6 @@ Controls:
 - <kbd>Right Arrow</kbd>, <kbd>Gamepad Left Stick</kbd>: Move right
 - <kbd>Space</kbd>, <kbd>Right Mouse Button</kbd>, <kbd>Gamepad A/Cross</kbd>: Jump
 
+Credits:
+- Astronaut
+	- [https://poly.pizza/m/3hC2i0CTuO](https://poly.pizza/m/3hC2i0CTuO)
