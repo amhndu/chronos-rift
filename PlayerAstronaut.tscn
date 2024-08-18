@@ -5,7 +5,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7hquv"]
 
-[node name="PlayerAstronaut" type="CharacterBody3D"]
+[node name="PlayerAstronaut" type="CharacterBody3D" groups=["player"]]
 collision_mask = 6
 script = ExtResource("1_2v5fl")
 
