@@ -22,8 +22,16 @@ func _ready():
 # NOTE: For time scaling to work, all acceleration (or velocity increments) must be defined properties
 # Any new property must be added to `scale_time` method
 func _physics_process(delta):
-	if !is_alive:
+	if !is_alive || is_attacking:
 		return
+
+	if Input.is_action_pressed("attack") && !is_attacking:
+		is_attacking = true
+		var timeoutSignal:Signal = get_tree().create_timer(1).timeout
+		timeoutSignal.connect(on_timeout_attack)
+		animation_player.play("CharacterArmature|Sword_Slash", 0.2)
+		return
+
 	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
@@ -33,11 +41,6 @@ func _physics_process(delta):
 		direction.z += 1
 	if Input.is_action_pressed("move_forward"):
 		direction.z -= 1
-	if Input.is_action_pressed("attack") && !is_attacking:
-		is_attacking = true
-		var timeoutSignal:Signal = get_tree().create_timer(1).timeout
-		timeoutSignal.connect(on_timeout_attack)
-		animation_player.play("CharacterArmature|Sword_Slash", 0.2)
 
 	if direction != Vector3.ZERO:
 		# In the lines below, we turn the character when moving and make the animation play faster.
