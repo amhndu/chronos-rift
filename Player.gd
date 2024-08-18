@@ -12,6 +12,11 @@ var time_scaling_factor = 1.0
 ## The downward acceleration when in the air, in meters per second.
 @export var fall_acceleration = 75
 
+var animation_player: AnimationPlayer
+
+func _ready():
+	animation_player = $Pivot/player_astronaut_imported/AnimationPlayer
+
 # NOTE: For time scaling to work, all acceleration (or velocity increments) must be defined properties
 # Any new property must be added to `scale_time` method
 func _physics_process(delta):	
@@ -30,6 +35,13 @@ func _physics_process(delta):
 		direction = direction.normalized().rotated(Vector3(0, 1, 0), deg_to_rad(-45))
 		# Setting the basis property will affect the rotation of the node.
 		basis = Basis.looking_at(direction)
+		# Switch to correct animation
+		animation_player.play("CharacterArmature|Walk")
+		# TODO Scale animation speed according to scale and time_scale
+		#animation_player.speed_scale = time_scaling_factor
+	else:
+		animation_player.play("CharacterArmature|Idle")
+		
 
 	velocity.x = direction.x * speed
 	velocity.z = direction.z * speed
