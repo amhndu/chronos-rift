@@ -24,4 +24,4 @@ func on_mobs_all_cleared():
 	game_end.emit()
 
 func on_level_loaded():
-	mob_manager = get_parent().find_child("MobManager")
+	mob_manager = get_parent().find_child("Level").get_child(0).find_child("MobManager")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://2y3ar4s86yra"]
+[gd_scene load_steps=11 format=3 uid="uid://2y3ar4s86yra"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ha0ar5s2c3m4" path="res://Mob.tscn" id="3"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dw8gv18obpglk" path="res://PlayerAstronaut.tscn" id="5_ubv7w"]
 [ext_resource type="Script" path="res://GameManager.gd" id="6_lkn2a"]
 [ext_resource type="Script" path="res://LevelManager.gd" id="7_2tb7l"]
-[ext_resource type="PackedScene" uid="uid://dgd7mhy8nma00" path="res://level_scenes/Level2.tscn" id="8_csvfg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m3njk"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -95,8 +94,6 @@ script = ExtResource("6_lkn2a")
 
 [node name="Level" type="Node3D" parent="."]
 script = ExtResource("7_2tb7l")
-
-[node name="Level2" parent="Level" instance=ExtResource("8_csvfg")]
 
 [connection signal="mob_kill" from="PlayerAstronaut" to="GameManager" method="on_mob_killed"]
 [connection signal="player_hit" from="PlayerAstronaut" to="GameManager" method="on_player_hit"]
