@@ -1,15 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://2y3ar4s86yra"]
+[gd_scene load_steps=12 format=3 uid="uid://2y3ar4s86yra"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ha0ar5s2c3m4" path="res://Mob.tscn" id="3"]
 [ext_resource type="Script" path="res://CameraFollow.gd" id="4_4ilyq"]
 [ext_resource type="Script" path="res://HUDManager.gd" id="5_cvawc"]
-[ext_resource type="Script" path="res://MobManager.gd" id="5_m56xj"]
 [ext_resource type="PackedScene" uid="uid://dw8gv18obpglk" path="res://PlayerAstronaut.tscn" id="5_ubv7w"]
 [ext_resource type="Script" path="res://GameManager.gd" id="6_lkn2a"]
+[ext_resource type="Script" path="res://LevelManager.gd" id="7_2tb7l"]
 [ext_resource type="PackedScene" uid="uid://dgd7mhy8nma00" path="res://level_scenes/Level2.tscn" id="8_csvfg"]
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_i5n5q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_m3njk"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -26,31 +24,6 @@ tonemap_mode = 2
 [node name="Main" type="Node"]
 script = ExtResource("1")
 mob_scene = ExtResource("3")
-
-[node name="Walls" type="StaticBody3D" parent="."]
-editor_description = "These invisible walls are used to prevent the player from escaping the playable area.
-
-These walls use WorldBoundaryShape3D collision shapes, which are infinitely large planes
-(even though they look finite in the editor)."
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-collision_layer = 0
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 10, 11)
-shape = SubResource("WorldBoundaryShape3D_i5n5q")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Walls"]
-transform = Transform3D(-4.37114e-08, 1, -1.31134e-07, 0, 1.31134e-07, 1, 1, 4.37114e-08, -5.73206e-15, -13, 10, -4.76837e-07)
-shape = SubResource("WorldBoundaryShape3D_i5n5q")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Walls"]
-transform = Transform3D(4.37114e-08, -1, 2.18557e-07, 3.82137e-15, -2.18557e-07, -1, 1, 4.37114e-08, -5.73206e-15, 14, 10, -4.76837e-07)
-shape = SubResource("WorldBoundaryShape3D_i5n5q")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Walls"]
-transform = Transform3D(1, 5.96046e-08, -1.42109e-14, 3.82137e-15, -2.18557e-07, -1, -5.96046e-08, 1, -2.18557e-07, 9.53674e-07, 10, -20)
-shape = SubResource("WorldBoundaryShape3D_i5n5q")
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.5, -0.777049, 0.382355, 0, 0.441506, 0.897258, -0.866025, -0.448629, 0.220753, 0, 12.5592, 14.7757)
@@ -78,20 +51,6 @@ far = 69.04
 script = ExtResource("4_4ilyq")
 cameraPivotPath = NodePath("..")
 objectToFollowPath = NodePath("../../PlayerAstronaut")
-
-[node name="Mobs" type="Node" parent="."]
-script = ExtResource("5_m56xj")
-
-[node name="Mob" parent="Mobs" instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 171.806, 0, -1.5)
-time_scale = 2.0
-
-[node name="Mob2" parent="Mobs" instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.838, 0, -1.5)
-time_scale = 0.5
-
-[node name="Mob3" parent="Mobs" instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.0921, 0, -1.5)
 
 [node name="HUD" type="Control" parent="." node_paths=PackedStringArray("scoreLabel", "restartButton")]
 layout_mode = 3
@@ -134,15 +93,16 @@ text = "Restart Game"
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("6_lkn2a")
 
-[node name="Level2" parent="." instance=ExtResource("8_csvfg")]
+[node name="Level" type="Node3D" parent="."]
+script = ExtResource("7_2tb7l")
 
-[connection signal="mob_kill" from="PlayerAstronaut" to="Mobs" method="on_mob_killed"]
+[node name="Level2" parent="Level" instance=ExtResource("8_csvfg")]
+
 [connection signal="mob_kill" from="PlayerAstronaut" to="GameManager" method="on_mob_killed"]
 [connection signal="player_hit" from="PlayerAstronaut" to="GameManager" method="on_player_hit"]
-[connection signal="mobs_all_clear" from="Mobs" to="GameManager" method="on_mobs_all_cleared"]
 [connection signal="pressed" from="HUD/RestartButton" to="GameManager" method="on_restart_clicked"]
 [connection signal="game_end" from="GameManager" to="HUD" method="on_game_ended"]
 [connection signal="game_restart" from="GameManager" to="PlayerAstronaut" method="reset_player"]
-[connection signal="game_restart" from="GameManager" to="Mobs" method="on_game_restarted"]
 [connection signal="game_restart" from="GameManager" to="HUD" method="on_game_restarted"]
 [connection signal="score_update" from="GameManager" to="HUD" method="on_score_updated"]
+[connection signal="level_load" from="Level" to="GameManager" method="on_level_loaded"]

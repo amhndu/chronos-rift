@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgd7mhy8nma00"]
+[gd_scene load_steps=5 format=3 uid="uid://dgd7mhy8nma00"]
 
 [ext_resource type="PackedScene" uid="uid://cve8iy5d5imos" path="res://level_scenes/platforms/two_by_one.tscn" id="1_uvqhu"]
 [ext_resource type="PackedScene" uid="uid://lktjsrrmsdkx" path="res://level_scenes/platforms/four_by_four.tscn" id="2_oa1jg"]
+[ext_resource type="Script" path="res://MobManager.gd" id="3_w14gw"]
+[ext_resource type="PackedScene" uid="uid://ha0ar5s2c3m4" path="res://Mob.tscn" id="4_7grbl"]
 
 [node name="Level2" type="Node3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -25,3 +27,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2692, 0, 0)
 
 [node name="FourByFour4" parent="." instance=ExtResource("2_oa1jg")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.1903, 0, 0)
+
+[node name="MobManager" type="Node" parent="."]
+script = ExtResource("3_w14gw")
+
+[node name="Mob" parent="MobManager" instance=ExtResource("4_7grbl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 171.806, 0, -1.5)
+time_scale = 2.0
+
+[node name="Mob2" parent="MobManager" instance=ExtResource("4_7grbl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.838, 0, -1.5)
+time_scale = 0.5
+
+[node name="Mob3" parent="MobManager" instance=ExtResource("4_7grbl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.0921, 0, -1.5)
