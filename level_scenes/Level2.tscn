@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgd7mhy8nma00"]
+
+[ext_resource type="PackedScene" uid="uid://cve8iy5d5imos" path="res://level_scenes/platforms/two_by_one.tscn" id="1_uvqhu"]
+[ext_resource type="PackedScene" uid="uid://lktjsrrmsdkx" path="res://level_scenes/platforms/four_by_four.tscn" id="2_oa1jg"]
+
+[node name="Level2" type="Node3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="FourByFour" parent="." instance=ExtResource("2_oa1jg")]
+
+[node name="TwoByOne" parent="." instance=ExtResource("1_uvqhu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.86255, 0, 0)
+
+[node name="FourByFour2" parent="." instance=ExtResource("2_oa1jg")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.68299, 0, 0)
+
+[node name="TwoByOne2" parent="." instance=ExtResource("1_uvqhu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.54547, 0, 0)
+
+[node name="FourByFour3" parent="." instance=ExtResource("2_oa1jg")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.4079, 0, 0)
+
+[node name="TwoByOne3" parent="." instance=ExtResource("1_uvqhu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2692, 0, 0)
+
+[node name="FourByFour4" parent="." instance=ExtResource("2_oa1jg")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.1903, 0, 0)

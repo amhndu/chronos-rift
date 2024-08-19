@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://lktjsrrmsdkx"]
+
+[ext_resource type="PackedScene" uid="uid://di5oyfc6smmpk" path="res://art/level/platforms/Platform_4x4.gltf" id="1_1huu4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bgf0p"]
+size = Vector3(4, 1, 4)
+
+[node name="FourByFour" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.451081, 0)
+shape = SubResource("BoxShape3D_bgf0p")
+
+[node name="Platform_4x42" parent="." instance=ExtResource("1_1huu4")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://2y3ar4s86yra"]
+[gd_scene load_steps=13 format=3 uid="uid://2y3ar4s86yra"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ha0ar5s2c3m4" path="res://Mob.tscn" id="3"]
@@ -7,12 +7,7 @@
 [ext_resource type="Script" path="res://MobManager.gd" id="5_m56xj"]
 [ext_resource type="PackedScene" uid="uid://dw8gv18obpglk" path="res://PlayerAstronaut.tscn" id="5_ubv7w"]
 [ext_resource type="Script" path="res://GameManager.gd" id="6_lkn2a"]
-
-[sub_resource type="BoxShape3D" id="1"]
-size = Vector3(60, 2, 60)
-
-[sub_resource type="BoxMesh" id="2"]
-size = Vector3(60, 2, 60)
+[ext_resource type="PackedScene" uid="uid://dgd7mhy8nma00" path="res://level_scenes/Level2.tscn" id="8_csvfg"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_i5n5q"]
 
@@ -31,17 +26,6 @@ tonemap_mode = 2
 [node name="Main" type="Node"]
 script = ExtResource("1")
 mob_scene = ExtResource("3")
-
-[node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("1")
-
-[node name="MeshInstance" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("2")
 
 [node name="Walls" type="StaticBody3D" parent="."]
 editor_description = "These invisible walls are used to prevent the player from escaping the playable area.
@@ -99,15 +83,15 @@ objectToFollowPath = NodePath("../../PlayerAstronaut")
 script = ExtResource("5_m56xj")
 
 [node name="Mob" parent="Mobs" instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.8336, 0, -12.5912)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 171.806, 0, -1.5)
 time_scale = 2.0
 
 [node name="Mob2" parent="Mobs" instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3145, 0, 13.0698)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.838, 0, -1.5)
 time_scale = 0.5
 
 [node name="Mob3" parent="Mobs" instance=ExtResource("3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2312, 0, 13.0698)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.0921, 0, -1.5)
 
 [node name="HUD" type="Control" parent="." node_paths=PackedStringArray("scoreLabel", "restartButton")]
 layout_mode = 3
@@ -149,6 +133,8 @@ text = "Restart Game"
 
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("6_lkn2a")
+
+[node name="Level2" parent="." instance=ExtResource("8_csvfg")]
 
 [connection signal="mob_kill" from="PlayerAstronaut" to="Mobs" method="on_mob_killed"]
 [connection signal="mob_kill" from="PlayerAstronaut" to="GameManager" method="on_mob_killed"]

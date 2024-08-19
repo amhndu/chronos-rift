@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cve8iy5d5imos"]
+
+[ext_resource type="PackedScene" uid="uid://b8wn1x6w7je1o" path="res://art/level/platforms/Platform_2x1_Empty.gltf" id="1_j784q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bgf0p"]
+size = Vector3(2, 1, 1)
+
+[node name="TwoByOne" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.454859, 0)
+shape = SubResource("BoxShape3D_bgf0p")
+
+[node name="Platform_2x1_Empty2" parent="." instance=ExtResource("1_j784q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.058, 0)
