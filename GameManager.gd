@@ -1,7 +1,9 @@
 extends Node
+class_name GameManager
 
 signal score_update(score: int)
 signal game_restart
+signal game_level_end
 signal game_end
 
 var score = 0
@@ -21,7 +23,8 @@ func on_restart_clicked():
 	game_restart.emit()
 
 func on_mobs_all_cleared():
-	game_end.emit()
+#	TODO show next level button
+	game_level_end.emit()
 
-func on_level_loaded():
+func on_level_loaded(number: int):
 	mob_manager = get_parent().find_child("Level").get_child(0).find_child("MobManager")

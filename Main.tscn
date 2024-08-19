@@ -99,7 +99,7 @@ script = ExtResource("7_2tb7l")
 [connection signal="player_hit" from="PlayerAstronaut" to="GameManager" method="on_player_hit"]
 [connection signal="pressed" from="HUD/RestartButton" to="GameManager" method="on_restart_clicked"]
 [connection signal="game_end" from="GameManager" to="HUD" method="on_game_ended"]
+[connection signal="game_level_end" from="GameManager" to="Level" method="on_game_level_end"]
 [connection signal="game_restart" from="GameManager" to="PlayerAstronaut" method="reset_player"]
 [connection signal="game_restart" from="GameManager" to="HUD" method="on_game_restarted"]
 [connection signal="score_update" from="GameManager" to="HUD" method="on_score_updated"]
-[connection signal="level_load" from="Level" to="GameManager" method="on_level_loaded"]
