@@ -125,6 +125,8 @@ offset_right = 57.0
 offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_top = NodePath("../NextLevelButton")
+focus_previous = NodePath("../NextLevelButton")
 text = "Restart Level"
 
 [node name="NextLevelButton" type="Button" parent="HUD"]
@@ -141,6 +143,8 @@ offset_right = 57.0
 offset_bottom = -13.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_bottom = NodePath("../RestartButton")
+focus_next = NodePath("../RestartButton")
 text = "Next Level"
 
 [node name="GameManager" type="Node" parent="."]

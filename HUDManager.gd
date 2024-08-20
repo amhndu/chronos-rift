@@ -13,9 +13,11 @@ func on_score_updated(score: int):
 
 func on_game_level_ended():
 	restartButton.visible = true
+	restartButton.grab_focus()
 
 func on_game_level_cleared():
 	nextButton.visible = true
+	nextButton.grab_focus()
 	restartButton.visible = true
 	
 func on_game_level_started():
