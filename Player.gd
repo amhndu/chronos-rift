@@ -120,7 +120,7 @@ func scale_time(scale: float):
 	time_scaling_factor *= scale
 
 func _on_weapon_body_entered(body: Node3D) -> void:
-	if not is_attacking or not can_attack:
+	if not is_alive or not is_attacking or not can_attack:
 		return
 		
 	if body.is_in_group("mob") and body.owner.is_alive:
