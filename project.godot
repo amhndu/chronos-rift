@@ -14,7 +14,7 @@ config/name="Cronos Rift"
 config/description="Scale Times"
 run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.3")
-config/icon="res://icon.webp"
+config/icon="res://art/icon.png"
 
 [autoload]
 
