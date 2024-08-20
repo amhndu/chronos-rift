@@ -16,8 +16,9 @@ var time_scaling_factor = 1.0
 
 var animation_player: AnimationPlayer
 var is_alive = true
-var is_attacking = false
-var can_attack = true
+var is_attacking = false # prevent attack button spamming
+var can_attack = true 
+var mob_kill_cooldown = 1 # attack cooldown in number of seconds after mob kill
 var spawn_location = Vector3.ZERO
 var attack_speed = 1.5
 
@@ -28,10 +29,10 @@ func _ready():
 # NOTE: For time scaling to work, all acceleration (or velocity increments) must be defined properties
 # Any new property must be added to `scale_time` method
 func _physics_process(delta):
-	if !is_alive || is_attacking:
+	if !is_alive:
 		return
 
-	if Input.is_action_pressed("attack") && !is_attacking:
+	if Input.is_action_pressed("attack") && can_attack && !is_attacking:
 		is_attacking = true
 		animation_player.play("CharacterArmature|Sword_Slash", 0.2, attack_speed)
 		var anim_time = animation_player.current_animation_length / animation_player.get_playing_speed()
@@ -54,8 +55,12 @@ func _physics_process(delta):
 		direction = direction.normalized().rotated(Vector3(0, 1, 0), deg_to_rad(-45))
 		# Setting the basis property will affect the rotation of the node.
 		basis = Basis.looking_at(direction)
-		# Switch to correct animation
-		animation_player.play("CharacterArmature|Walk", 0.2)
+		if !is_attacking:
+			# Switch to correct animation
+			animation_player.play("CharacterArmature|Walk", 0.2)
+		else:
+			# Slower movement while attacking
+			direction *= 0.3
 		# TODO Scale animation speed according to scale and time_scale
 		#animation_player.speed_scale = time_scaling_factor
 	elif !is_attacking:
@@ -68,7 +73,8 @@ func _physics_process(delta):
 	# Jumping.
 	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y += jump_impulse
-		animation_player.play("CharacterArmature|Idle_Sword", 0.2)
+		if !is_attacking:
+			animation_player.play("CharacterArmature|Idle_Sword", 0.2)
 
 	# 
 	# We apply gravity every frame so the character always collides with the ground when moving.
@@ -121,5 +127,5 @@ func _on_weapon_body_entered(body: Node3D) -> void:
 		can_attack = false
 		body.owner.die()
 		mob_kill.emit()
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(mob_kill_cooldown).timeout
 		can_attack = true
