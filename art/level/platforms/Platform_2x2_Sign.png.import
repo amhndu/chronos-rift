@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://h72wp5x0jm5k"
 path.s3tc="res://.godot/imported/Platform_2x2_Sign.png-988de93025fd5be2a2fbc7f69ca8c123.s3tc.ctex"
+path.etc2="res://.godot/imported/Platform_2x2_Sign.png-988de93025fd5be2a2fbc7f69ca8c123.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://art/level/platforms/Platform_2x2_Sign.png"
-dest_files=["res://.godot/imported/Platform_2x2_Sign.png-988de93025fd5be2a2fbc7f69ca8c123.s3tc.ctex"]
+dest_files=["res://.godot/imported/Platform_2x2_Sign.png-988de93025fd5be2a2fbc7f69ca8c123.s3tc.ctex", "res://.godot/imported/Platform_2x2_Sign.png-988de93025fd5be2a2fbc7f69ca8c123.etc2.ctex"]
 
 [params]
 
