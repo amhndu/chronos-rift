@@ -51,7 +51,7 @@ script = ExtResource("4_4ilyq")
 cameraPivotPath = NodePath("..")
 objectToFollowPath = NodePath("../../PlayerAstronaut")
 
-[node name="HUD" type="Control" parent="." node_paths=PackedStringArray("scoreLabel", "restartButton")]
+[node name="HUD" type="Control" parent="." node_paths=PackedStringArray("scoreLabel", "finalScoreLabel", "nextButton", "restartButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,6 +60,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_cvawc")
 scoreLabel = NodePath("ScoreLabel")
+finalScoreLabel = NodePath("FinalScoreLabel")
+nextButton = NodePath("NextLevelButton")
 restartButton = NodePath("RestartButton")
 
 [node name="ScoreLabel" type="Label" parent="HUD"]
@@ -73,6 +75,28 @@ theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 36
 text = "Score: 0"
 
+[node name="FinalScoreLabel" type="Label" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -25.0
+offset_right = 68.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 36
+text = "You made it to the end!
+Your final score:
+1000"
+horizontal_alignment = 1
+
 [node name="RestartButton" type="Button" parent="HUD"]
 visible = false
 layout_mode = 1
@@ -82,12 +106,28 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -57.0
-offset_top = -15.5
+offset_top = -2.0
 offset_right = 57.0
-offset_bottom = 15.5
+offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Restart Game"
+text = "Restart Level"
+
+[node name="NextLevelButton" type="Button" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -44.0
+offset_right = 57.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Next Level"
 
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("6_lkn2a")
@@ -98,8 +138,14 @@ script = ExtResource("7_2tb7l")
 [connection signal="mob_kill" from="PlayerAstronaut" to="GameManager" method="on_mob_killed"]
 [connection signal="player_hit" from="PlayerAstronaut" to="GameManager" method="on_player_hit"]
 [connection signal="pressed" from="HUD/RestartButton" to="GameManager" method="on_restart_clicked"]
+[connection signal="pressed" from="HUD/NextLevelButton" to="GameManager" method="on_next_clicked"]
 [connection signal="game_end" from="GameManager" to="HUD" method="on_game_ended"]
+[connection signal="game_level_clear" from="GameManager" to="HUD" method="on_game_level_cleared"]
+[connection signal="game_level_end" from="GameManager" to="HUD" method="on_game_level_ended"]
 [connection signal="game_level_end" from="GameManager" to="Level" method="on_game_level_end"]
-[connection signal="game_restart" from="GameManager" to="PlayerAstronaut" method="reset_player"]
-[connection signal="game_restart" from="GameManager" to="HUD" method="on_game_restarted"]
+[connection signal="game_level_next" from="GameManager" to="PlayerAstronaut" method="reset_player"]
+[connection signal="game_level_next" from="GameManager" to="HUD" method="on_game_level_started"]
+[connection signal="game_level_next" from="GameManager" to="Level" method="on_game_level_next"]
+[connection signal="game_level_restart" from="GameManager" to="PlayerAstronaut" method="reset_player"]
+[connection signal="game_level_restart" from="GameManager" to="HUD" method="on_game_level_started"]
 [connection signal="score_update" from="GameManager" to="HUD" method="on_score_updated"]

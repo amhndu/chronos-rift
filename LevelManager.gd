@@ -11,7 +11,7 @@ func _enter_tree():
 	var instance = levels[current_level_index].instantiate()
 	add_child(instance)
 
-func on_game_level_end():
+func on_game_level_next():
 	if (current_level_index >= levels.size()):
 		return
 	current_level_index += 1

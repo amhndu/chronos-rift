@@ -17,7 +17,7 @@ func on_mob_killed():
 	if num_mobs_alive <= 0:
 		mobs_all_clear.emit()
 
-func on_game_restarted():
+func on_game_level_restarted():
 	for child in get_children():
 		child.reset()
 	num_mobs_alive = get_children().size()

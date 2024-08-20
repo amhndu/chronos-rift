@@ -18,6 +18,7 @@ var animation_player: AnimationPlayer
 var is_alive = true
 var is_attacking = false
 var can_attack = true
+var spawn_location = Vector3.ZERO
 
 func _ready():
 	animation_player = $Pivot/player_astronaut_imported/AnimationPlayer
@@ -94,7 +95,7 @@ func die():
 	self.visible = false
 
 func reset_player():
-	self.global_position = Vector3(0, 0, 0)
+	self.global_position = spawn_location
 	animation_player.play("CharacterArmature|Idle_Sword")
 	is_attacking = false
 	time_scaling_factor = 1
