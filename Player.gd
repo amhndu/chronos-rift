@@ -86,7 +86,7 @@ func _physics_process(delta):
 	for index in range(get_slide_collision_count()):
 		var collision = get_slide_collision(index)
 		var collider = collision.get_collider()
-		if collider.is_in_group("mob"):
+		if collider.is_in_group("mob") && collider.owner.is_alive:
 			die()
 
 func on_timeout_attack():
