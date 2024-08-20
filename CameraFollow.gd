@@ -19,11 +19,10 @@ func _process(delta):
 	if objectToFollow == null:
 		return
 
-	# TODO Not working with Input Map
-	#if Input.is_action_pressed("zoom_in"):
-		#camTargetZoomSize = max(camTargetZoomSize - 1, camMinZoomSize)
-	#elif Input.is_action_pressed("zoom_out"):
-		#camTargetZoomSize = min(camTargetZoomSize + 1, camMaxZoomSize)
+	if Input.is_action_pressed("zoom_in"):
+		camTargetZoomSize = max(camTargetZoomSize - 1, camMinZoomSize)
+	elif Input.is_action_pressed("zoom_out"):
+		camTargetZoomSize = min(camTargetZoomSize + 1, camMaxZoomSize)
 
 	if shouldUseLerp:
 		cameraPivot.global_position = cameraPivot.global_position.lerp(objectToFollow.global_position, delta * camAccel)
