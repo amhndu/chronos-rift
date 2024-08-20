@@ -1,4 +1,8 @@
 # Chronos Rift
+<p align="center">
+  <img src="/art/icon.png" />
+</p>
+
 In "Chronos Rift," you play as the Traveler, a weary and battle-hardened figure destined to navigate treacherous time rifts in search of the ultimate Time Fragment. Face perilous enemies in cyberpunk worlds, as you piece together fragments of time. Only by conquering the enemies who live in their time domains can the Traveler uncover the one Time Fragment that holds the power to rule them all! Take care though, as the time domains can speed up or slow down time!
 
 ## Controls:
@@ -19,3 +23,8 @@ Built using Godot 4.3 and open source game assets.
 - Light saber by April Lewer [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/fJr5YcNJ0Wf)
 - Cyberpunk Game Kit (https://quaternius.com/packs/cyberpunkgamekit.html)
 - Sci-fi ambient 1 by Rmshh -- https://freesound.org/s/744017/ -- License: Attribution 4.0
+
+## Screenshots
+![Player battling enemy 1](/screenshots/1.jpg)
+![Player battling enemy 2](/screenshots/2.jpg)
+![Player battling enemy 3](/screenshots/3.jpg)
