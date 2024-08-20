@@ -19,6 +19,7 @@ var is_alive = true
 var is_attacking = false
 var can_attack = true
 var spawn_location = Vector3.ZERO
+var attack_speed = 1.5
 
 func _ready():
 	animation_player = $Pivot/player_astronaut_imported/AnimationPlayer
@@ -32,9 +33,10 @@ func _physics_process(delta):
 
 	if Input.is_action_pressed("attack") && !is_attacking:
 		is_attacking = true
-		var timeoutSignal:Signal = get_tree().create_timer(1).timeout
+		animation_player.play("CharacterArmature|Sword_Slash", 0.2, attack_speed)
+		var anim_time = animation_player.current_animation_length / animation_player.get_playing_speed()
+		var timeoutSignal:Signal = get_tree().create_timer(anim_time).timeout
 		timeoutSignal.connect(on_timeout_attack)
-		animation_player.play("CharacterArmature|Sword_Slash", 0.2)
 		return
 
 	var direction = Vector3.ZERO
