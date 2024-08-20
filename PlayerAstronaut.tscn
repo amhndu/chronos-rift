@@ -34,7 +34,7 @@ bones/62/rotation = Quaternion(0.121389, 0.0100988, -0.0792508, 0.989385)
 transform = Transform3D(-0.522216, -0.800994, -0.292744, 0.848446, -0.453278, -0.273274, 0.0861964, -0.391085, 0.916309, -0.00188053, -0.00196923, 0.0090618)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.7, 0, 0, 0, 2.7, 0, 0, 0, 2.7, 0, 2.38883, 0)
+transform = Transform3D(2.7, 0, 0, 0, 2.7, 0, 0, 0, 2.7, 0, 2.73162, 0)
 shape = SubResource("CapsuleShape3D_7hquv")
 
 [editable path="Pivot/player_astronaut_imported"]
